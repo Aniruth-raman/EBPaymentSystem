@@ -1,7 +1,10 @@
 package com.group2.capstone.EBPaymentSystem.billing;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class Bill {
     private double amount;
     private Date dueDate;

@@ -1,7 +1,8 @@
-package com.group2.capstone.EBPaymentSystem.authentication;
+package com.group2.capstone.EBPaymentSystem.profile;
 
-import com.group2.capstone.EBPaymentSystem.profile.UserProfile;
+import lombok.Data;
 
+@Data
 public class User {
     private final String username;
     private final String password;

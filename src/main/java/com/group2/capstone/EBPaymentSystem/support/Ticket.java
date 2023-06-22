@@ -1,16 +1,11 @@
 package com.group2.capstone.EBPaymentSystem.support;
 
-import com.group2.capstone.EBPaymentSystem.authentication.User;
+import com.group2.capstone.EBPaymentSystem.profile.User;
 
 public class Ticket {
-    private int id;
-    private User user;
-    private String issue;
-
-    public void setStatus(TicketStatus status) {
-        this.status = status;
-    }
-
+    private final int id;
+    private final User user;
+    private final String issue;
     private TicketStatus status;
 
     public Ticket(int id, User user, String issue) {
@@ -18,6 +13,10 @@ public class Ticket {
         this.user = user;
         this.issue = issue;
         this.status = TicketStatus.OPEN;
+    }
+
+    public void setStatus(TicketStatus status) {
+        this.status = status;
     }
 
 

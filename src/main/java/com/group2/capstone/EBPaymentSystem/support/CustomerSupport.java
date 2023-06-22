@@ -1,6 +1,6 @@
 package com.group2.capstone.EBPaymentSystem.support;
 
-import com.group2.capstone.EBPaymentSystem.authentication.User;
+import com.group2.capstone.EBPaymentSystem.profile.User;
 
 public class CustomerSupport {
     public Ticket createTicket(User user, String issue) {

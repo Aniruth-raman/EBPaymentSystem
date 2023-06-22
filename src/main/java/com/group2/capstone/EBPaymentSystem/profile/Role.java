@@ -1,4 +1,4 @@
-package com.group2.capstone.EBPaymentSystem.authentication;
+package com.group2.capstone.EBPaymentSystem.profile;
 
 import java.util.Set;
 

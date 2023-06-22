@@ -1,8 +1,11 @@
 package com.group2.capstone.EBPaymentSystem.profile;
 
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class UserProfile {
     private final String name;
     private final String contactDetails;
