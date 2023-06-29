@@ -8,11 +8,17 @@ import java.util.Date;
 public class Bill {
     private double amount;
     private Date dueDate;
+    private Integer status;
 
     public Bill(double amount, Date dueDate) {
         this.amount = amount;
         this.dueDate = dueDate;
     }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
 
     // getters and setters
 }

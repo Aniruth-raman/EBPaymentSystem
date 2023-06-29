@@ -1,12 +1,18 @@
 package com.group2.capstone.EBPaymentSystem.profile;
 
-public enum Permission {
-    CREATE_DISTRICT_OFFICER,
-    CREATE_CONSUMER,
-    VIEW_ALL_USERS,
-    VIEW_PROFILE,
-    UPDATE_PROFILE,
-    MONITOR_USAGE,
-    VIEW_BILL,
-    PAY_BILL
+public class Permission {
+    private String permissionName;
+
+    public Permission(String permissionName) {
+        this.permissionName = permissionName;
+    }
+
+    public String getPermissionName() {
+        return permissionName;
+    }
+
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
+    }
 }
+
