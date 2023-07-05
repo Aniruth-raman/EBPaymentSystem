@@ -1,0 +1,13 @@
+package com.group2.capstone.EBPaymentSystem.authentication;
+
+public class JwtResponse {
+    private final String token;
+
+    public JwtResponse(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+}
