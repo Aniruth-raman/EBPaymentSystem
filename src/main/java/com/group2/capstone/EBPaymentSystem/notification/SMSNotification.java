@@ -1,6 +1,6 @@
 package com.group2.capstone.EBPaymentSystem.notification;
 
-import com.group2.capstone.EBPaymentSystem.profile.User;
+import com.group2.capstone.EBPaymentSystem.models.User;
 
 public class SMSNotification implements NotificationService {
     @Override
