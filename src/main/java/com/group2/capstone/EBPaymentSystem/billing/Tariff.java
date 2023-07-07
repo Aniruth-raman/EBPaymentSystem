@@ -1,6 +1,6 @@
 package com.group2.capstone.EBPaymentSystem.billing;
 
-import com.group2.capstone.EBPaymentSystem.profile.PropertyType;
+import com.group2.capstone.EBPaymentSystem.models.PropertyType;
 
 public class Tariff {
     public double getRateForUsage(PropertyType propertyType, double usage) {

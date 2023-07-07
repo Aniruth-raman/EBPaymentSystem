@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 
-public class Meter {
+public class MeterService {
     Double currentDayUsage;
     Map<Date, Double> historicalUsage;
 

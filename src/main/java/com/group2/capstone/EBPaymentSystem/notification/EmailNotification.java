@@ -1,11 +1,14 @@
 package com.group2.capstone.EBPaymentSystem.notification;
 
-import com.group2.capstone.EBPaymentSystem.profile.User;
+import com.group2.capstone.EBPaymentSystem.models.User;
 
 public class EmailNotification implements NotificationService {
-    @Override
-    public void notify(User user, String message) {
-//        Implement Logic for sending the message and attaching the bill to the mail as attachment.
-    }
+
+	@Override
+	public void notify(User user, String message) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

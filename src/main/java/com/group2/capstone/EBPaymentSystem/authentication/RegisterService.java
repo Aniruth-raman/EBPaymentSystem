@@ -1,7 +1,7 @@
 package com.group2.capstone.EBPaymentSystem.authentication;
 
-import com.group2.capstone.EBPaymentSystem.profile.Role;
-import com.group2.capstone.EBPaymentSystem.profile.UserProfile;
+import com.group2.capstone.EBPaymentSystem.models.Role;
+import com.group2.capstone.EBPaymentSystem.models.UserProfile;
 
 public class RegisterService {
     public boolean register(String username, String password, Role role, UserProfile profile) {
