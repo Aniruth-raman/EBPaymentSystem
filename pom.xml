@@ -6,6 +6,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>3.1.1</version>
     <relativePath></relativePath>
+    <!-- lookup parent from repository -->
   </parent>
   <groupId>com.group2.capstone</groupId>
   <artifactId>ebpaymentsystem</artifactId>
@@ -13,7 +14,7 @@
   <name>EBPaymentSystem</name>
   <description>Capstone Project for GL PGP SDE Course</description>
   <properties>
-    <java.version>18</java.version>
+    <java.version>17</java.version>
   </properties>
   <dependencies>
     <dependency>
