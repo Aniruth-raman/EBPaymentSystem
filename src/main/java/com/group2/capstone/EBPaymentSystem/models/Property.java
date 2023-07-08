@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,10 +22,8 @@ public class Property {
 	private Long id;
 	@OneToOne
     private Meter meter;
-    @OneToOne
+    @ManyToOne
     private PropertyType propertyType;
-//    @OneToOne(mappedBy = "property",cascade = CascadeType.ALL)
-//    private Bill bill;
     @OneToOne
     private Address address;
 }

@@ -29,6 +29,7 @@ public class Bill {
     @ManyToOne(cascade = CascadeType.ALL)
     private Property property;
     private Integer status;
+    private double unitsConsumed;
 
     public Bill(double amount, Date dueDate) {
         this.amount = amount;
