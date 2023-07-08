@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class User {
 	private Long id;
 	private String username;
 	private String password;
-	@OneToOne
+	@ManyToOne
 	private Role role;
 	@OneToOne
 	private UserProfile profile;

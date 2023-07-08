@@ -16,44 +16,55 @@ import org.springframework.stereotype.Service;
 
 import com.group2.capstone.EBPaymentSystem.models.Bill;
 import com.group2.capstone.EBPaymentSystem.models.Meter;
+import com.group2.capstone.EBPaymentSystem.models.MeterReadings;
 import com.group2.capstone.EBPaymentSystem.models.Property;
 import com.group2.capstone.EBPaymentSystem.models.PropertyType;
 import com.group2.capstone.EBPaymentSystem.models.User;
 import com.group2.capstone.EBPaymentSystem.repository.BillingRepo;
+import com.group2.capstone.EBPaymentSystem.repository.MeterReadingsRepo;
 
 @Service
 public class BillingService {
 
 	@Autowired
 	private BillingRepo billRepo;
-	
+
 	@Autowired
 	private CalendarService calService;
 	
-	public List<Property> getUserProperties(User user){
+	@Autowired
+	private MeterReadingsRepo meterReadingsRepo;
+
+	public List<Property> getUserProperties(User user) {
 		List<Property> properties = user.getProfile().getProperties();
 		return properties;
 	}
 	
-	
-	public Bill calculateBill(Property property) {
+	public List<MeterReadings> getMeterReadings(Meter meter, int month, int year){
+		
+		List<MeterReadings> readings = meterReadingsRepo.findByMeter(meter.getMeterId(), month, year);
+		return readings;
+	}
+
+	public Bill calculateBill(Property property, int month, int year) {
 		Meter meter = property.getMeter();
+		List<MeterReadings> readings = getMeterReadings(meter, month, year);
 		PropertyType pType = property.getPropertyType();
-		
-		double amount= 0;
-		double units = meter.getUnitsConsumed();
-		
-		if(units>400) {
-			amount += 200*pType.getLowRate();
-			amount += 200*pType.getMediumRate();
-			amount += (units-400)*pType.getHighRate();
-		}else if(units>200) {
-			amount += 200*pType.getLowRate();
-			amount += (units-200)*pType.getMediumRate();
-		}else {
-			amount += units*pType.getLowRate();
+
+		double amount = 0;
+		double units = readings.get(0).getUnitsConsumed();
+
+		if (units > 400) {
+			amount += 200 * pType.getLowRate();
+			amount += 200 * pType.getMediumRate();
+			amount += (units - 400) * pType.getHighRate();
+		} else if (units > 200) {
+			amount += 200 * pType.getLowRate();
+			amount += (units - 200) * pType.getMediumRate();
+		} else {
+			amount += units * pType.getLowRate();
 		}
-		
+
 		Calendar cal = calService.getDueDate();
 		LocalDate date = LocalDate.now();
 		Integer status = 0;
@@ -63,79 +74,103 @@ public class BillingService {
 		bill.setProperty(property);
 		bill.setStatus(status);
 		bill.setBillingMonth(date);
+		bill.setUnitsConsumed(units);
 		return bill;
-		
+
 	}
-	
-	
+
 	public void insertBill(Bill bill) {
 		billRepo.save(bill);
 	}
-	
-	
-	public byte[] pdfGenerator(User user) throws IOException {
-		List<Bill> latestBills = getBillForUser(user);
+
+	public byte[] pdfGenerator(User user, List<Bill> bills) throws IOException {
+//		List<Bill> latestBills = getBillForUser(user);
 		PDDocument document = new PDDocument();
-		
+
 		PDPage pdpage = new PDPage();
-		
+
 		document.addPage(pdpage);
-		
-		PDPageContentStream contentStream = new PDPageContentStream(document, pdpage, PDPageContentStream.AppendMode.APPEND,true,true);
+
+		PDPageContentStream contentStream = new PDPageContentStream(document, pdpage,
+				PDPageContentStream.AppendMode.APPEND, true, true);
 
 		contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
 		float startX = 50;
 		float startY = 700;
-	    float endX = pdpage.getMediaBox().getWidth() - 50; // Adjust the end position if needed
-	    float endY = startY;
-		
+		float endX = pdpage.getMediaBox().getWidth() - 50; // Adjust the end position if needed
+		float endY = startY;
+
 		contentStream.beginText();
 		contentStream.newLineAtOffset(startX, startY);
-		contentStream.showText("Name: "+user.getProfile().getName());
+
+		contentStream.showText("Name: " + user.getProfile().getName());
 		contentStream.newLine();
-		contentStream.showText("Email: "+user.getProfile().getEmail());
+		contentStream.newLineAtOffset(0, -15); // Move to the next line
+		contentStream.showText("Email: " + user.getProfile().getEmail());
 		contentStream.newLine();
-		contentStream.showText("Contact No: "+user.getProfile().getContactNo());
+		contentStream.newLineAtOffset(0, -15); // Move to the next line
+		contentStream.showText("Contact No: " + user.getProfile().getContactNo());
 		contentStream.newLine();
-		contentStream.showText("Date: "+LocalDate.now());
+		contentStream.newLineAtOffset(0, -15); // Move to the next line
+		contentStream.showText("Date: " + LocalDate.now());
 		contentStream.newLine();
-		for(Bill bill:latestBills) {
+		contentStream.newLineAtOffset(0, -15); // Move to the next line
+		for (Bill bill : bills) {
+			contentStream.newLine();
+			contentStream.newLineAtOffset(0, -15);
+			contentStream.showText("Meter ID: " + bill.getProperty().getMeter().getMeterId());
+			contentStream.newLine();
+			contentStream.newLineAtOffset(0, -15);
+			contentStream.showText("Generated Date: " + bill.getBillingMonth());
+			contentStream.newLine();
+			contentStream.newLineAtOffset(0, -15);
+			String[] addressLines = splitAddressIntoLines(bill.getProperty().getAddress().toString());
+			for (String addressLine : addressLines) {
+				contentStream.showText(addressLine);
+				contentStream.newLine();
+				contentStream.newLineAtOffset(0, -15);
+			}
 			
-			contentStream.showText("Generated Date: "+bill.getBillingMonth());
+			contentStream.showText("Units Consumed: " + bill.getUnitsConsumed());
 			contentStream.newLine();
-			contentStream.showText("Property Address: "+bill.getProperty().getAddress());
+			contentStream.newLineAtOffset(0, -15);
+			contentStream.showText("Amount: " + bill.getAmount());
 			contentStream.newLine();
-			contentStream.showText("Meter ID: "+bill.getProperty().getMeter().getMeterId());
+			contentStream.newLineAtOffset(0, -15);
+			contentStream.showText("Due Date: " + bill.getDueDate());
 			contentStream.newLine();
-			contentStream.showText("Units Consumed: "+bill.getProperty().getMeter().getUnitsConsumed());
+			contentStream.newLineAtOffset(0, -15);
 			contentStream.newLine();
-			contentStream.showText("Amount: "+bill.getAmount());
-			contentStream.newLine();
-			contentStream.showText("Due Date: "+bill.getDueDate());
-			contentStream.newLine();
-			contentStream.newLine();
-			
+			contentStream.newLineAtOffset(0, -15);
+
 		}
 		contentStream.endText();
 		contentStream.moveTo(startX, endY);
-	    contentStream.lineTo(endX, endY);
-	    contentStream.stroke();
-		
+		contentStream.lineTo(endX, endY);
+		contentStream.stroke();
 		contentStream.close();
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		document.save(outputStream);
 		document.close();
-		
+
 		return outputStream.toByteArray();
 	}
-	
-	public List<Bill> getBillForUser(User user){
-		
+
+	private String[] splitAddressIntoLines(String address) {
+		String[] lines = address.split(", ");
+		for (String line : lines) {
+			System.out.println(line);
+		}
+		return lines;
+	}
+
+	public List<Bill> getBillForUser(User user) {
+
 		List<Bill> bills = new ArrayList<>();
-		
+
 		List<Property> properties = getUserProperties(user);
-		
-		for(Property property:properties) {
+
+		for (Property property : properties) {
 			List<Bill> allBills = billRepo.findByProperty(property.getId());
 			bills.add(allBills.get(0));
 		}
@@ -144,4 +179,13 @@ public class BillingService {
 	}
 	
 	
+	public List<Bill> getBillForPrevMonths(User user, int month, int year){
+		List<Bill> bills = new ArrayList<>();
+		List<Property> properties = getUserProperties(user);
+		for (Property property : properties) {
+			bills.add(billRepo.findByPropertyAndDate(property.getId(), month, year));
+		}
+		return bills;
+	}
+
 }
