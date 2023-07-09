@@ -1,4 +1,4 @@
-package com.group2.capstone.EBPaymentSystem.models;
+package com.group2.capstone.EBPaymentSystem.billing.models;
 
 import java.util.List;
 
@@ -10,6 +10,9 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

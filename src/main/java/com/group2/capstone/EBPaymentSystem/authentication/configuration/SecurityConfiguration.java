@@ -53,14 +53,14 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-//                     auth.anyRequest().permitAll();
-                    auth.requestMatchers("/v3/**").permitAll();
-                    auth.requestMatchers("/h2-console/**").permitAll();
-                    auth.requestMatchers("/swagger-ui/**").permitAll();
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
-                    auth.anyRequest().authenticated();
+                     auth.anyRequest().permitAll();
+//                    auth.requestMatchers("/v3/**").permitAll();
+//                    auth.requestMatchers("/h2-console/**").permitAll();
+//                    auth.requestMatchers("/swagger-ui/**").permitAll();
+//                    auth.requestMatchers("/auth/**").permitAll();
+//                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+//                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+//                    auth.anyRequest().authenticated();
                 });
 
         http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer

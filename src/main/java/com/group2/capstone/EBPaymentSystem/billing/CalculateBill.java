@@ -1,12 +1,5 @@
 package com.group2.capstone.EBPaymentSystem.billing;
 
-import com.group2.capstone.EBPaymentSystem.models.Bill;
-import com.group2.capstone.EBPaymentSystem.models.Property;
-import com.group2.capstone.EBPaymentSystem.models.User;
-
-import java.util.Calendar;
-import java.util.List;
-
 public class CalculateBill {
     public static final int BASE_AMOUNT = 150;
     Tariff tariff;
