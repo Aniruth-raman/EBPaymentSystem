@@ -1,4 +1,4 @@
-package com.group2.capstone.EBPaymentSystem.models;
+package com.group2.capstone.EBPaymentSystem.billing.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Permission {
-	@Id
+    @Id
     private String permissionName;
 }
 

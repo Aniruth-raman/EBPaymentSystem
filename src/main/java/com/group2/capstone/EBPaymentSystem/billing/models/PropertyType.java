@@ -1,4 +1,4 @@
-package com.group2.capstone.EBPaymentSystem.models;
+package com.group2.capstone.EBPaymentSystem.billing.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class PropertyType {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long propertyTypeId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long propertyTypeId;
     private String propertyName;
     private double lowRate;
     private double mediumRate;

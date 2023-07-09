@@ -1,4 +1,4 @@
-package com.group2.capstone.EBPaymentSystem.models;
+package com.group2.capstone.EBPaymentSystem.billing.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String street;
     private String city;
     private String state;
@@ -31,5 +31,5 @@ public class Address {
     
 	
 
-    
+
 }

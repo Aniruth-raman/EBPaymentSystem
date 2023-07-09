@@ -6,12 +6,8 @@ import com.group2.capstone.EBPaymentSystem.authentication.services.Authenticatio
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -24,7 +20,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@RequestBody RegistrationDTO body) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authenticationService.registerUser(body.getUsername(), body.getPassword(),body.getRole(),authentication);
+        return authenticationService.registerUser(body.getUsername(), body.getPassword(), body.getRole(), authentication);
     }
 
     @PostMapping("/login")

@@ -1,9 +1,5 @@
 package com.group2.capstone.EBPaymentSystem.authentication.services;
 
-import java.net.http.HttpClient;
-import java.util.HashSet;
-import java.util.Set;
-
 import com.group2.capstone.EBPaymentSystem.authentication.models.LoginResponseDTO;
 import com.group2.capstone.EBPaymentSystem.authentication.models.Role;
 import com.group2.capstone.EBPaymentSystem.authentication.models.User;
@@ -20,7 +16,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 @Transactional
