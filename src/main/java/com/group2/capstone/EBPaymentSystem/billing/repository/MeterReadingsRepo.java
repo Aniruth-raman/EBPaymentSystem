@@ -1,12 +1,11 @@
-package com.group2.capstone.EBPaymentSystem.repository;
+package com.group2.capstone.EBPaymentSystem.billing.repository;
 
 import java.util.List;
 
+import com.group2.capstone.EBPaymentSystem.billing.models.MeterReadings;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.group2.capstone.EBPaymentSystem.models.MeterReadings;
 
 @Repository
 public interface MeterReadingsRepo extends JpaRepository<MeterReadings, Long>{

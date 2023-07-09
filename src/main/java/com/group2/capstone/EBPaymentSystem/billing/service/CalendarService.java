@@ -7,11 +7,9 @@ import java.util.Calendar;
 
 @Service
 public class CalendarService {
-
     public Calendar getDueDate() {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 15);
         return cal;
     }
-
 }

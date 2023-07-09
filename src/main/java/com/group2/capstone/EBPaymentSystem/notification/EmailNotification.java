@@ -1,6 +1,6 @@
 package com.group2.capstone.EBPaymentSystem.notification;
 
-import com.group2.capstone.EBPaymentSystem.billing.models.User;
+import com.group2.capstone.EBPaymentSystem.authentication.models.User;
 
 public class EmailNotification implements NotificationService {
 

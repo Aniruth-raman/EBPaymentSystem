@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -60,6 +61,7 @@ public class SecurityConfiguration {
 //                    auth.requestMatchers("/auth/**").permitAll();
 //                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
 //                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+//                    auth.requestMatchers("/bill/generator/**").hasAnyRole("ADMIN,DEPARTMENT_OFFICIAL");
 //                    auth.anyRequest().authenticated();
                 });
 
