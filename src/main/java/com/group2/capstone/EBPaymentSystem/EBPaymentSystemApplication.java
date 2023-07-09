@@ -55,7 +55,7 @@ public class EBPaymentSystemApplication {
             User user = new User(2, "aniruth", passwordEncode.encode("password"), newRole, userProfile);
             userRepository.save(user);
 
-            MeterReadings meterReading = new MeterReadings(1, new Date(LocalDate.of(2023, 06, 30).toEpochDay()), 850, meter);
+            MeterReadings meterReading = new MeterReadings(1, LocalDate.of(2023, 06, 30), 850, meter);
             meterReadingsRepo.save(meterReading);
         };
     }

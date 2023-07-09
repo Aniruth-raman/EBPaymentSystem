@@ -1,6 +1,6 @@
 package com.group2.capstone.EBPaymentSystem.billing.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ public class MeterReadings {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	private Date date;
+	private LocalDate date;
 	private double unitsConsumed;
 	@ManyToOne
 	private Meter meter;
