@@ -16,7 +16,7 @@ public class Property {
     private Long id;
     @OneToOne
     private Meter meter;
-    @OneToOne
+    @ManyToOne
     private PropertyType propertyType;
     //    @OneToOne(mappedBy = "property",cascade = CascadeType.ALL)
 //    private Bill bill;
