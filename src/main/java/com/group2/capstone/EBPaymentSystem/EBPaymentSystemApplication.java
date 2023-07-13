@@ -23,6 +23,7 @@ import java.util.Set;
 
 @SpringBootApplication
 @EnableScheduling
+@EnableTransactionManagement
 public class EBPaymentSystemApplication {
 
     public static void main(String[] args) {
