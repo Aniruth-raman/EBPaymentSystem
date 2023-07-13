@@ -1,4 +1,4 @@
-package com.group2.capstone.EBPaymentSystem.authentication.models;
+ package com.group2.capstone.EBPaymentSystem.authentication.models;
 
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

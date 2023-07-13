@@ -23,6 +23,8 @@ import com.group2.capstone.EBPaymentSystem.authentication.models.User;
 import com.group2.capstone.EBPaymentSystem.billing.repository.BillingRepo;
 import com.group2.capstone.EBPaymentSystem.billing.repository.MeterReadingsRepo;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class BillingService {
 
@@ -75,8 +77,9 @@ public class BillingService {
         bill.setStatus(status);
         bill.setBillingMonth(date);
         bill.setUnitsConsumed(units);
+        insertBill(bill);
+        
         return bill;
-
     }
 
     public void insertBill(Bill bill) {
@@ -84,7 +87,6 @@ public class BillingService {
     }
 
     public byte[] pdfGenerator(User user, List<Bill> bills) throws IOException {
-//		List<Bill> latestBills = getBillForUser(user);
         PDDocument document = new PDDocument();
 
         PDPage pdpage = new PDPage();
