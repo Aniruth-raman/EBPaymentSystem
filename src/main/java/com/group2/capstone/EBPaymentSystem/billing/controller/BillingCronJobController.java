@@ -15,8 +15,10 @@ import com.group2.capstone.EBPaymentSystem.billing.service.BillingService;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 @Controller
+@Transactional
 public class BillingCronJobController {
 
 	@Autowired
@@ -28,22 +30,27 @@ public class BillingCronJobController {
 	@PersistenceContext
     private EntityManager entityManager;
 	
-	@Scheduled(cron="00 24 16 12 * *")
-	public void generateBillEveryMonth() {
+	@Scheduled(cron="00 50 02 14 * *")
+	public void getAllUsers() {
 		List<User> users = userService.getAllConsumers();
-       
 		for(User user:users) {
-			System.out.println(user);
-			List<Property> properties = billService.getUserProperties(user);
-	        System.out.println("properties fetched");
-	       
-	        LocalDate date = LocalDate.now();
-	        int month = date.getMonthValue();
-	        int year = date.getYear();
-	        for(Property property:properties) {
-	            billService.calculateBill(property, month, year);
-	            System.out.println("bill calculated");
-	        }
+			generateBillEveryMonth(user);
+		}
+	}
+	
+	
+	public void generateBillEveryMonth(User user) {
+       
+		System.out.println(user);
+		List<Property> properties = billService.getUserProperties(user);
+        System.out.println("properties fetched");
+       
+        LocalDate date = LocalDate.now();
+        int month = date.getMonthValue();
+        int year = date.getYear();
+        for(Property property:properties) {
+            billService.calculateBill(property, month, year);
+            System.out.println("bill calculated");
 
 		}
 		

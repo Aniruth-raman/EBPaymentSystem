@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -14,18 +15,20 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.group2.capstone.EBPaymentSystem.authentication.models.User;
 import com.group2.capstone.EBPaymentSystem.billing.models.Bill;
 import com.group2.capstone.EBPaymentSystem.billing.models.Meter;
 import com.group2.capstone.EBPaymentSystem.billing.models.MeterReadings;
 import com.group2.capstone.EBPaymentSystem.billing.models.Property;
 import com.group2.capstone.EBPaymentSystem.billing.models.PropertyType;
-import com.group2.capstone.EBPaymentSystem.authentication.models.User;
 import com.group2.capstone.EBPaymentSystem.billing.repository.BillingRepo;
 import com.group2.capstone.EBPaymentSystem.billing.repository.MeterReadingsRepo;
+import com.group2.capstone.EBPaymentSystem.billing.repository.PropertyRepo;
 
 import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class BillingService {
 
     @Autowired
@@ -36,6 +39,9 @@ public class BillingService {
 
     @Autowired
     private MeterReadingsRepo meterReadingsRepo;
+    
+    @Autowired
+    private PropertyRepo propertyRepo;
 
     public List<Property> getUserProperties(User user) {
         List<Property> properties = user.getUserProfile().getProperties();
@@ -83,7 +89,7 @@ public class BillingService {
     }
 
     public void insertBill(Bill bill) {
-        billRepo.save(bill);
+            billRepo.save(bill);
     }
 
     public byte[] pdfGenerator(User user, List<Bill> bills) throws IOException {
@@ -118,6 +124,9 @@ public class BillingService {
         contentStream.newLine();
         contentStream.newLineAtOffset(0, -15); // Move to the next line
         for (Bill bill : bills) {
+        	contentStream.newLine();
+            contentStream.newLineAtOffset(0, -15);
+            contentStream.showText("BIll ID: " + bill.getId());
             contentStream.newLine();
             contentStream.newLineAtOffset(0, -15);
             contentStream.showText("Meter ID: " + bill.getProperty().getMeter().getMeterId());
@@ -188,6 +197,13 @@ public class BillingService {
             bills.add(billRepo.findByPropertyAndDate(property.getId(), month, year));
         }
         return bills;
+    }
+    
+    
+    public Bill getBillFromBillId(long billId) {
+    	
+    	Optional<Bill> bill = billRepo.findById(billId);
+    	return bill.get();
     }
 
 }
