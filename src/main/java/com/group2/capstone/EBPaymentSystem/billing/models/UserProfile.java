@@ -19,7 +19,7 @@ public class UserProfile {
     private String name;
     private String contactNo;
     private String email;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Property> properties;
 
 }

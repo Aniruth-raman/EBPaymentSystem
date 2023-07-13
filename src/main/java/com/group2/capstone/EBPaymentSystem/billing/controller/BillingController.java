@@ -42,14 +42,8 @@ public class BillingController {
         List<Bill> bills = new ArrayList<>();
         for(Property property:properties) {
             bills.add(billService.calculateBill(property, month, year));
-            System.out.println("bill calculated");
         }
-
-        for(Bill bill:bills) {
-            billService.insertBill(bill);
-            System.out.println("bill inserted");
-        }
-
+        
         return bills.toString();
     }
 
@@ -89,6 +83,7 @@ public class BillingController {
         }
 
     }
+    
 
 
 

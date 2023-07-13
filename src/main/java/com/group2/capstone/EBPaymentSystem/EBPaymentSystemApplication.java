@@ -10,7 +10,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
+@EnableScheduling
 public class EBPaymentSystemApplication {
 
     public static void main(String[] args) {

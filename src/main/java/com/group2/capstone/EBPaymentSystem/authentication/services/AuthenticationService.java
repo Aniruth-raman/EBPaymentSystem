@@ -62,9 +62,9 @@ public class AuthenticationService {
             authorities.add(userRole);
             // authorities.add(roleRepository.findByAuthority("ADMIN").get());
             // authorities.add(roleRepository.findByAuthority("DISTRICT_OFFICIAL").get());
-        } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_DISTRICT_OFFICIAL"))) {
+        } else if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_DEPARTMENT_OFFICIAL"))) {
             if (!role.equals("USER")) {
-                return new ResponseEntity<>("DISTRICT_OFFICIAL cannot create another " + role, HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>("DEPARTMENT_OFFICIAL cannot create another " + role, HttpStatus.FORBIDDEN);
             }
             authorities.add(userRole);
             // authorities.add(roleRepository.findByAuthority("DISTRICT_OFFICIAL").get());
