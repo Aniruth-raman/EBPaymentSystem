@@ -1,22 +1,13 @@
 package com.group2.capstone.EBPaymentSystem.authentication.models;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
+import com.group2.capstone.EBPaymentSystem.billing.models.UserProfile;
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -25,10 +16,13 @@ public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer userId;
+    private long userId;
     @Column(unique = true)
     private String username;
     private String password;
+
+    @OneToOne
+    private UserProfile userProfile;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role_junction", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
@@ -39,7 +33,7 @@ public class User implements UserDetails {
         authorities = new HashSet<>();
     }
 
-    public User(Integer userId, String username, String password, Set<Role> authorities) {
+    public User(long userId, String username, String password, Set<Role> authorities) {
         super();
         this.userId = userId;
         this.username = username;
@@ -47,7 +41,16 @@ public class User implements UserDetails {
         this.authorities = authorities;
     }
 
-    public Integer getUserId() {
+    public User(long userId, String username, String password, Set<Role> authorities, UserProfile userProfile) {
+        super();
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+        this.userProfile = userProfile;
+    }
+
+    public long getUserId() {
         return this.userId;
     }
 
@@ -55,13 +58,13 @@ public class User implements UserDetails {
         this.userId = userId;
     }
 
-    public void setAuthorities(Set<Role> authorities) {
-        this.authorities = authorities;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
+    }
+
+    public void setAuthorities(Set<Role> authorities) {
+        this.authorities = authorities;
     }
 
     @Override
@@ -106,8 +109,16 @@ public class User implements UserDetails {
         return true;
     }
 
+    public UserProfile getUserProfile() {
+        return userProfile;
+    }
+
+    public void setUserProfile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", username='" + username + '\'' + ", password='" + password + '\'' + ", authorities=" + authorities + '}';
+        return "User{" + "userId=" + userId + ", username='" + username + '\'' + ", password='" + password + '\'' + ", userProfile=" + userProfile + ", authorities=" + authorities + '}';
     }
 }

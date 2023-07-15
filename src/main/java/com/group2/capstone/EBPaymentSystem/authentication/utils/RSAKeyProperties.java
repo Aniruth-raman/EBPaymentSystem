@@ -1,10 +1,10 @@
 package com.group2.capstone.EBPaymentSystem.authentication.utils;
 
+import org.springframework.stereotype.Component;
+
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-
-import org.springframework.stereotype.Component;
 
 @Component
 public class RSAKeyProperties {

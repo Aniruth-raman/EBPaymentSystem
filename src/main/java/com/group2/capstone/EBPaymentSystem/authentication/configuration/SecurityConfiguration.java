@@ -13,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -52,15 +53,17 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .headers(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-//                     auth.anyRequest().permitAll();
-                    auth.requestMatchers("/v3/**").permitAll();
-                    auth.requestMatchers("/h2-console/**").permitAll();
-                    auth.requestMatchers("/swagger-ui/**").permitAll();
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
-                    auth.anyRequest().authenticated();
+                    auth.anyRequest().permitAll();
+//                    auth.requestMatchers("/v3/**").permitAll();
+//                    auth.requestMatchers("/h2-console/**").permitAll();
+//                    auth.requestMatchers("/swagger-ui/**").permitAll();
+//                    auth.requestMatchers("/auth/**").permitAll();
+//                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
+//                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+//                    auth.requestMatchers("/bill/generator/**").hasAnyRole("ADMIN,DEPARTMENT_OFFICIAL");
+//                    auth.anyRequest().authenticated();
                 });
 
         http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer
