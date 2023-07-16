@@ -154,6 +154,8 @@ public class BillingService {
             contentStream.newLineAtOffset(0, -15);
 
         }
+        contentStream.newLine();
+        contentStream.showText("You can pay the bill at: "+"http://localhost:8081/pay");
         contentStream.endText();
         contentStream.moveTo(startX, endY);
         contentStream.lineTo(endX, endY);
