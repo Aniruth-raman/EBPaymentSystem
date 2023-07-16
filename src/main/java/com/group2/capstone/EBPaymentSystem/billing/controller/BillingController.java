@@ -5,7 +5,7 @@ import com.group2.capstone.EBPaymentSystem.authentication.services.UserService;
 import com.group2.capstone.EBPaymentSystem.billing.models.Bill;
 import com.group2.capstone.EBPaymentSystem.billing.models.Property;
 import com.group2.capstone.EBPaymentSystem.billing.service.BillingService;
-import com.group2.capstone.EBPaymentSystem.notification.controller.NotificationProducer;
+import com.group2.capstone.EBPaymentSystem.notification.producer.NotificationProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,8 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.Month;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @RestController
@@ -27,6 +30,7 @@ public class BillingController {
 
     @Autowired
     private BillingService billService;
+    @Autowired
     private NotificationProducer notificationProducer;
 
     @GetMapping("/{userid}")
@@ -38,11 +42,12 @@ public class BillingController {
         System.out.println("properties fetched");
         List<Bill> bills = new ArrayList<>();
         for (Property property : properties) {
-            bills.add(billService.calculateBill(property, month, year));
+            Bill bill = billService.calculateBill(property, month, year);
+            String subjectString = "Bill Generated for the month " + Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.UK) + " " + year;
+            String messageString = "Your bill for the month of " + Month.of(month).getDisplayName(TextStyle.FULL_STANDALONE, Locale.UK) + " " + year + " is generated and the total amount outstanding is " + bill.getAmount();
+            notificationProducer.sendNotification(user.get().getUserProfile(), subjectString, messageString);
+            bills.add(bill);
         }
-        String subjectString = "Bill Generated for the month " + month + " " + year;
-        String messageString = "Your bill for the month of " + month + " " + year + "is generated and the total amount outstanding is" + bills;
-        notificationProducer.sendNotification(user.get().getUserProfile(),subjectString , messageString);
         return bills.toString();
     }
 

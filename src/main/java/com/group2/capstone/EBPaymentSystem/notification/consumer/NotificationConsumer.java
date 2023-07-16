@@ -1,6 +1,7 @@
-package com.group2.capstone.EBPaymentSystem.notification.controller;
+package com.group2.capstone.EBPaymentSystem.notification.consumer;
 
 import com.group2.capstone.EBPaymentSystem.billing.models.UserProfile;
+import com.group2.capstone.EBPaymentSystem.notification.config.RabbitMQConfig;
 import com.group2.capstone.EBPaymentSystem.notification.models.NotificationMessage;
 import com.group2.capstone.EBPaymentSystem.notification.service.NotificationService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -13,8 +14,9 @@ public class NotificationConsumer {
     @Autowired
     private NotificationService notificationService;
 
-    @RabbitListener(queues = "notificationQueue")
+    @RabbitListener(queues = RabbitMQConfig.QUEUE)
     public void receiveNotification(NotificationMessage notificationMessage) {
+//        System.out.println("Notification Consumer:" + notificationMessage);
         UserProfile userProfile = notificationMessage.getUserProfile();
         String subject = notificationMessage.getSubject();
         String message = notificationMessage.getMessage();
