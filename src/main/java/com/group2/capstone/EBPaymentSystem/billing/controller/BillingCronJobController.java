@@ -1,18 +1,14 @@
 package com.group2.capstone.EBPaymentSystem.billing.controller;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
-
 import com.group2.capstone.EBPaymentSystem.authentication.models.User;
 import com.group2.capstone.EBPaymentSystem.authentication.services.UserService;
-import com.group2.capstone.EBPaymentSystem.billing.models.Bill;
 import com.group2.capstone.EBPaymentSystem.billing.models.Property;
 import com.group2.capstone.EBPaymentSystem.billing.service.BillingService;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -30,7 +26,7 @@ public class BillingCronJobController {
 	@PersistenceContext
     private EntityManager entityManager;
 	
-	@Scheduled(cron="00 50 02 14 * *")
+	@Scheduled(cron="00 59 23 28-30 * *")
 	public void getAllUsers() {
 		List<User> users = userService.getAllConsumers();
 		for(User user:users) {
